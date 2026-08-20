@@ -47,3 +47,5 @@ exploRome is a full-stack web application designed to help users discover, host,
    ```bash
    git clone [https://github.com/KalpeshPN-42/exploRome.git](https://github.com/KalpeshPN-42/exploRome.git)
    cd exploRome
+2. **You can visit my website on:**
+   https://explorome.onrender.com
