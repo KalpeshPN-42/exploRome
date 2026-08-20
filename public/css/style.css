@@ -1,0 +1,350 @@
+html,body{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+::selection{
+    background-color: #a50591;
+    color: white;
+}
+
+/* edit */
+.row-btns{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.add{
+    background-color: #a50591 !important;
+    color: white !important;
+    pointer-events: all !important;
+    width: 14rem;
+}
+
+.edit{
+    background-color: rgb(0, 0, 0) !important;
+    color: white !important;
+    pointer-events: all !important;
+    width: 4.5rem;
+}
+
+.edit-div{
+    min-width: 15.5rem;
+    margin-bottom: 2rem !important;
+}
+
+.delete{
+    background-color: rgb(226, 29, 29) !important;
+    color: white !important;
+}
+
+.add-btn{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.image.edit{
+    height: 20rem;
+    width: 80%;
+    margin-top: 3rem;
+    border-radius: 0.5rem;
+    min-width: 14rem;
+}
+
+.image-edit-div{
+    display: flex;
+    justify-content: center;
+}
+
+/*all inputs and textareas with pink color's shadow */
+
+input:focus{
+    border:1px solid #a50591 !important;
+    box-shadow: 0 0 0 0.25rem rgba(165, 5, 145, 0.25) !important;
+}
+
+textarea:focus{
+    border: 1px solid rgb(165, 5, 145)!important;
+    box-shadow: 0 0 0 0.25rem rgba(165, 5, 145, 0.25) !important;
+}
+
+/*navbar*/
+
+.container-fluid.navbar{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.nav-menu-div{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.fa-compass.fa-sharp{
+    color: #a50591;
+    font-size: 3rem;
+    margin-left: 1rem;
+}
+
+.fa-solid.fa-bars{
+    display: none;
+    font-size: 1.8rem;
+    padding-right: 1rem;
+}
+
+.nav-menu-div a{
+    font-size: larger;
+    font-weight: 500;
+}
+
+.nav-menu-div a:hover{
+    text-decoration: underline;
+}
+
+.navbar.main {
+    background: linear-gradient(10deg, rgba(190, 181, 181, 0.9), rgba(244, 244, 244, 0.7)) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    min-width: 15.5rem;
+}
+
+.d-flex.searchbar{
+    margin-right: 2rem;
+    display: flex;
+}
+
+.d-flex.searchbar button{
+    margin-right: 1rem !important;
+}
+
+.d-flex.searchbar input{
+    margin-left: 1rem !important;
+}
+
+.d-flex.searchbar input:focus{
+    border:1px solid #a50591 !important;
+}
+
+.form-control.me-2:focus{
+    box-shadow: none !important;
+}
+
+.searchbar>button{
+    border:1px solid #a50591 !important;
+    color: #a50591;
+}
+
+.searchbar>button:hover{
+    background-color: #a50591;
+}
+
+.searchbar>button:focus{
+    background-color: #a50591 !important;
+}
+
+.fa-compass.fa-sharp{
+    animation: compass-icon-animation 500ms linear infinite;
+}
+
+@keyframes compass-icon-animation{
+    0%{
+        transform: rotate(0deg);
+    }
+    
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+.hidden-nav-elements{
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.hidden-nav-elements.active{
+    display: flex;
+}
+
+.d-flex.searchbar-hidden input:focus{
+    border:1px solid #a50591 !important;
+}
+
+.searchbar-hidden>button:hover{
+    background-color: #a50591;
+}
+
+.searchbar-hidden>button:focus{
+    background-color: #a50591 !important;
+}
+
+.searchbar-hidden>button{
+    border:1px solid #a50591 !important;
+    color: #a50591;
+}
+
+.searchbar-hidden.d-flex{
+    width: 100% !important;
+}
+
+.hidden-nav-elements.active-hamburger{
+    display: flex;
+}
+
+/*card*/
+
+.card{
+    border-radius: 1rem !important;
+    height: 22rem !important;
+   min-width: fit-content;
+}
+
+
+.card-img-top{
+    height: 15rem !important;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.card-text{
+    height: 2rem !important;
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body .title{
+    overflow-wrap: anywhere; /*or we can also use the agressive way like word-break:break-all; but it'll also break the words at any letter rather than breaking at the white-space*/
+}
+
+.card-body .price{
+    overflow-wrap: anywhere; /*or we can also use the agressive way like word-break:break-all; but it'll also break the words at any letter rather than breaking at the white-space*/
+}
+
+.cardsList a{
+    text-decoration: none;
+}
+
+.card:hover{
+    opacity: 0.8;
+}
+
+.cardsList{
+    min-width: 15.5rem;
+}
+
+.no-listings{
+    display: flex;
+    width: 100%;
+}
+
+.no-listings svg{
+    width: 100%;
+    aspect-ratio: 3/1;
+    min-height: 35rem;
+    margin-top: 2rem;
+    opacity: 0.7;
+}
+
+/*footer div*/
+ 
+.footer-div {
+    background: linear-gradient(10deg, rgb(150, 135, 135), rgb(244, 244, 244));
+    height: 4.5rem;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    min-width: 15.5rem;
+}
+
+.wrapper{
+    display:flex;
+    flex-direction: column;
+    min-height: 100%;
+    justify-content: space-between;
+}
+
+.main-listings{
+    width: 100%;
+    display: flex; 
+    flex-direction: column;
+    flex: 1;
+}
+c
+nav.navbar.main,.footer-div{
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;
+}
+
+.footer-div p{
+    text-align: center;
+}
+
+.copyRight{
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.1rem !important;
+}
+
+/*privacy page css */
+
+.privacy-terms{
+    display: flex;
+}
+
+/*new*/
+
+.new-form{
+    margin-bottom: 7rem !important;
+    min-width: 15.5rem;
+}
+
+
+/* flash styling */
+
+.main-flashes{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.flash-div{
+    text-align: center;
+    width: 80%;
+}
+
+/*media queries*/
+
+@media (max-width:912px){
+
+    .searchbar.d-flex{
+        display: none !important;
+    }
+
+    .nav-menu-div .navbar-brand ~ a{
+        display: none;
+    }
+
+    .fa-solid.fa-bars{
+        display: block;
+    }
+
+    .nav-menu-div{
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@media (min-width:912px) {
+    .hidden-nav-elements.active-hamburger{
+        display: none;
+    }
+}

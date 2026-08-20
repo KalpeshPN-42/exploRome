@@ -1,0 +1,329 @@
+<% layout("./layouts/boilerplate.ejs") %>
+<link href="/css/star-rating.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/edit.css">
+<style>
+    body { margin: 0; padding: 0; }
+    #map {width: 82% !important; height: 25rem !important;border: solid black 2px;}
+</style>
+<script>
+    const geometry = <%- JSON.stringify(listing.geometry || {}) %>;
+    const coordinates = geometry && geometry.coordinates ? geometry.coordinates : [73.8567, 18.5204];
+    const listingLocation=<%-JSON.stringify(listing.location)%>;
+</script>
+<div class="edit-div" style="overflow-x: hidden;">
+    <div class="image-edit-div">
+        <img src="<%= listing.image.url %>" alt="image" class="image edit" onerror="this.src='/images/commonImage.png'">
+    </div>
+    <%if(currentUser && currentUser._id.equals(listing.owner._id)){%>
+    <form method="post" action="/listing/<%=listing._id%>?_method=PATCH" class="edit-form needs-validation" enctype="multipart/form-data" novalidate>
+        <div class="container col-10 mt-5">
+            <div class="mb-3">
+                <p><b>Owner:@</b><mark><%= listing.owner.username %></mark></p>
+            </div>
+            <div class="mb-3">
+                <label for="title" class="form-label"><b>Title</b></label>
+                <input type="text" class="form-control" id="title" placeholder="ex. kalpataru nivas" value="<%= listing.title %>" name="title" maxlength="42" required>
+                <div class="invalid-feedback">Please enter title</div>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label"><b>Description</b></label>
+                <textarea class="form-control" id="description" rows="3" name="description" placeholder="enter the description"><%= listing.description %></textarea>
+            </div>
+            <div class="mb-3">
+                <input type="file" class="form-control" id="image" placeholder="Add Image" name="image">
+            </div>
+
+        <div class="row">
+            <div class="col-sm-6 price mb-3">
+                <label for="price" class="form-label"><b>Price</b></label>
+                <input
+                    type="number"
+                    class="form-control"
+                    id="price"
+                    placeholder="Add the Price"
+                    name="price"
+                    min="0"
+                    max="9999999"
+                    value="<%= listing.price %>"
+                    required
+                />
+                <div class="invalid-feedback">Please enter price per night</div>
+                <div class="valid-feedback">Ok</div>
+            </div>
+
+            <!-- Added position-relative to properly attach the dropdown -->
+            <div class="col-sm-6 location mb-3 position-relative">
+                <label for="location" class="form-label"><b>Location</b></label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="location"
+                    placeholder="Add the location"
+                    name="location"
+                    autocomplete="off"
+                    value="<%= listing.location %>" 
+                    required
+                />
+                <div class="invalid-feedback">Please provide location!</div>
+                <div class="valid-feedback">Nice!</div>
+                
+                <!-- Suggestions Dropdown -->
+                <ul
+                    id="suggestions-list"
+                    class="shadow-sm rounded"
+                    style="
+                        position: absolute;
+                        top: 100%;
+                        left: 12px;
+                        right: 12px;
+                        background: white;
+                        border: 1px solid #ced4da;
+                        list-style: none;
+                        margin: 0;
+                        padding: 0;
+                        display: none;
+                        max-height: 200px;
+                        overflow-y: auto;
+                        z-index: 1050;
+                    "
+                ></ul>
+            </div>
+        </div>
+
+        <input type="hidden" id="longitude" name="longitude" />
+        <input type="hidden" id="latitude" name="latitude" />
+            <div class="mb-3">
+                <label for="country" class="form-label"><b>Country</b></label>
+                <input type="text" class="form-control" id="country" placeholder="ex. India" value="<%= listing.country %>" name="country" required>
+                <div class="invalid-feedback">Country is required</div>
+            </div>
+            <div class="row-btns">
+                <div class="col-1">
+                    <button class="btn edit">Edit</button>
+                </div>
+                <div>
+                    <button class="btn delete" form="deleteForm">Delete</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form method="post" action="/listing/<%= listing._id %>?_method=DELETE" id="deleteForm">
+        <!-- this is delete form linked to the button inside the above edit form  -->
+    </form>
+    <%}else{%>
+    <form method="post" action="/listing/<%=listing._id%>?_method=PATCH" class="edit-form needs-validation" novalidate>
+        <div class="container col-10 mt-5">
+            <div class="mb-3">
+                <p><b>Owner:@</b><mark><%= listing.owner.username %></mark></p>
+            </div>
+            <div class="mb-3">
+                <label for="title" class="form-label"><b>Title</b></label>
+                <input type="text" class="form-control" id="title" placeholder="ex. kalpataru nivas" value="<%= listing.title %>" name="title" maxlength="42" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label"><b>Description</b></label>
+                <textarea class="form-control" id="description" rows="3" name="description" placeholder="enter the description" disabled><%= listing.description %></textarea>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 price">
+                    <label for="price" class="form-label"><b>Price</b></label>
+                    <input type="number" class="form-control" id="price" placeholder="ex. ₹4200"  min="0"  max="9999999999" value="<%= listing.price %>" name="price" disabled>
+                </div>
+                <div class="col-sm-6 location">
+                    <label for="location" class="form-label"><b>Location</b></label>
+                    <input type="text" class="form-control" id="location" placeholder="ex. Maharashtra" value="<%= listing.location %>" name="location" disabled>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="country" class="form-label"><b>Country</b></label>
+                <input type="text" class="form-control" id="country" placeholder="ex. India" value="<%= listing.country %>" name="country" disabled>
+            </div>
+        </form>
+    <% } %>
+</div>
+
+
+<%if(currentUser){%>
+    <hr class="col-10 mx-auto border-black opacity-100">
+    
+    <div class="add-review">
+        <h3>Add Review</h3>
+        <form action="/listing/<%= listing._id %>/review" novalidate class="new-form needs-validation" method="post">
+            <div class="star-rating-container d-flex justify-content-center mb-5 flex-column align-items-center">
+                <select class="star-rating" name="rating" required>
+                    <option value="">Select a rating</option>
+                    <option value="5">Excellent</option>
+                    <option value="4">Very Good</option>
+                    <option value="3">Average</option>
+                    <option value="2">Poor</option>
+                    <option value="1">Terrible</option>
+                </select>
+            </div>
+            <br>
+            <textarea name="feedback" id="" class="form-control" required></textarea>
+            <div class="invalid-feedback">Please give feedback!</div>
+            <br>
+            <button class="btn">Submit</button>
+        </form>
+    </div>
+<%}  %>
+
+<% if(listing.reviews.length!==0){ %>
+<div class="all-reviews">
+    <hr class="col-10 mx-auto border-black opacity-100">
+    <h3 class="col-10 mx-auto">All Reviews</h3>
+    <div class="reviews-main-container">
+        <div class="reviews row row-cols-1 row-cols-md-2 mb-2 mt-2 g-4">
+            <% for(let review of listing.reviews){ %>
+            <div class="col">
+                <div class="review h-100 flex-column d-flex justify-content-between" style="min-width: 221px;">
+                    <h5><b>@</b><mark><%= review.author.username %></mark></h5>
+                    <p><%= review.feedback %></p>
+                    <form action="/listing/<%= listing._id %>/review/<%=review._id %>?_method=DELETE" method="post" class="d-flex">
+                        <div class="star-delete-btn w-100 d-flex justify-content-between align-items-center" style="min-width: 205px;">
+                            <div class="review-stars d-flex flex-nowrap">
+                                <% for(let i=1;i<=5;i++){ %>    
+                                    <% if(i<=review.rating){ %>
+                                        <i class="fa-solid fa-star"></i>
+                                    <% }else{ %>
+                                        <i class="fa-regular fa-star"></i>
+                                    <% } %>
+                                <% } %>
+                            </div>
+                            <% if(currentUser && currentUser._id.equals(review.author._id)){ %>
+                            <div class="delete-review-button">
+                                <button class="btn btn-dark">Delete</button>  
+                            </div>
+                            <% } %>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+<% } %>
+
+<hr class="col-10 mx-auto border-black opacity-100">
+<h3 class="col-10 mx-auto">All Reviews</h3>
+<div class="col-6 w-100 d-flex justify-content-center mb-3">
+    <div id='map' style='width: 400px; height: 300px;'></div>
+</div>
+
+<script src="/js/star-rating.min.js"></script>
+<script>
+    var stars = new StarRating('.star-rating');
+</script>
+
+<script src="/js/map.js"></script>
+<script>
+    const input = document.querySelector("#location");
+    const suggestionsList = document.getElementById("suggestions-list");
+    let debounceTimer;
+
+    // Listen to user typing
+    input.addEventListener("input", (e) => {
+        const query = e.target.value.trim();
+        clearTimeout(debounceTimer);
+
+        if (query.length < 3) {
+            suggestionsList.style.display = "none";
+            return;
+        }
+
+        // Wait 300ms after user stops typing before fetching
+        debounceTimer = setTimeout(() => {
+            fetchSuggestions(query);
+        }, 300);
+    });
+
+    // Fetch place suggestions from Nominatim
+   async function fetchSuggestions(userInput) {
+    try {
+        const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(userInput)}&limit=5`;
+        const response = await fetch(url);
+        const result = await response.json();
+
+        // Convert Photon GeoJSON format to standard place objects
+        const places = result.features.map(f => {
+            const p = f.properties;
+            
+            // 1. Build a richer label (includes town, village, or district if city is missing)
+            const nameParts = [
+                p.name, 
+                p.district || p.suburb, 
+                p.city || p.town || p.village || p.county, 
+                p.state, 
+                p.country
+            ].filter(Boolean);
+
+            // 2. Remove duplicate values if place name matches city name
+            const uniqueParts = [...new Set(nameParts)];
+
+            return {
+                display_name: uniqueParts.join(", "),
+                lon: f.geometry.coordinates[0],
+                lat: f.geometry.coordinates[1],
+                address: { country: p.country }
+            };
+        });
+
+        renderSuggestions(places);
+    } catch (error) {
+        console.error("Autocomplete fetch error:", error);
+    }
+}
+
+    // Render suggestions dropdown
+    function renderSuggestions(places) {
+        suggestionsList.innerHTML = "";
+
+        if (!places || places.length === 0) {
+            suggestionsList.style.display = "none";
+            return;
+        }
+
+        places.forEach((place) => {
+            const li = document.createElement("li");
+            li.textContent = place.display_name;
+            li.style.padding = "10px 12px";
+            li.style.cursor = "pointer";
+            li.style.borderBottom = "1px solid #f0f0f0";
+
+            // Hover effect
+            li.addEventListener("mouseover", () => (li.style.background = "#f8f9fa"));
+            li.addEventListener("mouseout", () => (li.style.background = "white"));
+
+            // Handle selecting a place
+            li.addEventListener("click", () => {
+                input.value = place.display_name;
+
+                // Extract coordinates
+                const lon = parseFloat(place.lon);
+                const lat = parseFloat(place.lat);
+
+                document.getElementById("longitude").value = lon;
+                document.getElementById("latitude").value = lat;
+
+                // Auto-fill country field if present in Nominatim response
+                if (place.address && place.address.country) {
+                    document.getElementById("country").value = place.address.country;
+                }
+
+                suggestionsList.style.display = "none";
+            });
+
+            suggestionsList.appendChild(li);
+        });
+
+        suggestionsList.style.display = "block";
+    }
+
+    // Hide suggestions if user clicks anywhere outside
+    document.addEventListener("click", (e) => {
+        if (!input.contains(e.target) && !suggestionsList.contains(e.target)) {
+            suggestionsList.style.display = "none";
+        }
+    });
+</script>

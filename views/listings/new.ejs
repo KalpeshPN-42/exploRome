@@ -1,0 +1,247 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+<form
+    action="/listing/new"
+    class="new-form needs-validation"
+    method="post"
+    enctype="multipart/form-data"
+    novalidate
+>
+    <div class="container col-10 mt-5">
+        <div class="mb-3">
+            <label for="title" class="form-label"><b>Title</b></label>
+            <input
+                type="text"
+                class="form-control"
+                id="title"
+                placeholder="Add best title"
+                name="title"
+                maxlength="42"
+                required
+            />
+            <div class="invalid-feedback">Please enter title</div>
+            <div class="valid-feedback">Good one!</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label"
+                ><b>Description</b></label
+            >
+            <textarea
+                class="form-control"
+                id="description"
+                rows="3"
+                name="description"
+                placeholder="enter the description"
+                required
+            ></textarea>
+            <div class="invalid-feedback">Please provide brief description</div>
+            <div class="valid-feedback">Better!</div>
+        </div>
+
+        <div class="mb-3">
+            <input
+                type="file"
+                class="form-control"
+                id="image"
+                placeholder="Add Image"
+                name="image"
+                required
+            />
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 price mb-3">
+                <label for="price" class="form-label"><b>Price</b></label>
+                <input
+                    type="number"
+                    class="form-control"
+                    id="price"
+                    placeholder="Add the Price"
+                    name="price"
+                    min="0"
+                    max="9999999"
+                    required
+                />
+                <div class="invalid-feedback">Please enter price per night</div>
+                <div class="valid-feedback">Ok</div>
+            </div>
+
+            <!-- Added position-relative to properly attach the dropdown -->
+            <div class="col-sm-6 location mb-3 position-relative">
+                <label for="location" class="form-label"><b>Location</b></label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="location"
+                    placeholder="Add the location"
+                    name="location"
+                    autocomplete="off"
+                    required
+                />
+                <div class="invalid-feedback">Please provide location!</div>
+                <div class="valid-feedback">Nice!</div>
+
+                <!-- Suggestions Dropdown -->
+                <ul
+                    id="suggestions-list"
+                    class="shadow-sm rounded"
+                    style="
+                        position: absolute;
+                        top: 100%;
+                        left: 12px;
+                        right: 12px;
+                        background: white;
+                        border: 1px solid #ced4da;
+                        list-style: none;
+                        margin: 0;
+                        padding: 0;
+                        display: none;
+                        max-height: 200px;
+                        overflow-y: auto;
+                        z-index: 1050;
+                    "
+                ></ul>
+            </div>
+        </div>
+
+        <input type="hidden" id="longitude" name="longitude" />
+        <input type="hidden" id="latitude" name="latitude" />
+
+        <div class="mb-3">
+            <label for="country" class="form-label"><b>Country</b></label>
+            <input
+                type="text"
+                class="form-control"
+                id="country"
+                placeholder="Add the country"
+                name="country"
+                required
+            />
+            <div class="invalid-feedback">Country is required</div>
+            <div class="valid-feedback">Ok</div>
+        </div>
+
+        <div class="add-btn col-1">
+            <button type="submit" class="btn add">Add</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    const input = document.querySelector("#location");
+    const suggestionsList = document.getElementById("suggestions-list");
+    let debounceTimer;
+
+    // Listen to user typing
+    input.addEventListener("input", (e) => {
+        const query = e.target.value.trim();
+        clearTimeout(debounceTimer);
+
+        if (query.length < 3) {
+            suggestionsList.style.display = "none";
+            return;
+        }
+
+        // Wait 300ms after user stops typing before fetching
+        debounceTimer = setTimeout(() => {
+            fetchSuggestions(query);
+        }, 300);
+    });
+
+    // Fetch place suggestions from Nominatim
+    async function fetchSuggestions(userInput) {
+        try {
+            const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(userInput)}&limit=5`;
+            const response = await fetch(url);
+            const result = await response.json();
+
+            // Convert Photon GeoJSON format to standard place objects
+            const places = result.features.map((f) => {
+                const p = f.properties;
+
+                // 1. Build a richer label (includes town, village, or district if city is missing)
+                const nameParts = [
+                    p.name,
+                    p.district || p.suburb,
+                    p.city || p.town || p.village || p.county,
+                    p.state,
+                    p.country,
+                ].filter(Boolean);
+
+                // 2. Remove duplicate values if place name matches city name
+                const uniqueParts = [...new Set(nameParts)];
+
+                return {
+                    display_name: uniqueParts.join(", "),
+                    lon: f.geometry.coordinates[0],
+                    lat: f.geometry.coordinates[1],
+                    address: { country: p.country },
+                };
+            });
+
+            renderSuggestions(places);
+        } catch (error) {
+            console.error("Autocomplete fetch error:", error);
+        }
+    }
+
+    // Render suggestions dropdown
+    function renderSuggestions(places) {
+        suggestionsList.innerHTML = "";
+
+        if (!places || places.length === 0) {
+            suggestionsList.style.display = "none";
+            return;
+        }
+
+        places.forEach((place) => {
+            const li = document.createElement("li");
+            li.textContent = place.display_name;
+            li.style.padding = "10px 12px";
+            li.style.cursor = "pointer";
+            li.style.borderBottom = "1px solid #f0f0f0";
+
+            // Hover effect
+            li.addEventListener(
+                "mouseover",
+                () => (li.style.background = "#f8f9fa"),
+            );
+            li.addEventListener(
+                "mouseout",
+                () => (li.style.background = "white"),
+            );
+
+            // Handle selecting a place
+            li.addEventListener("click", () => {
+                input.value = place.display_name;
+
+                // Extract coordinates
+                const lon = parseFloat(place.lon);
+                const lat = parseFloat(place.lat);
+
+                document.getElementById("longitude").value = lon;
+                document.getElementById("latitude").value = lat;
+
+                // Auto-fill country field if present in Nominatim response
+                if (place.address && place.address.country) {
+                    document.getElementById("country").value =
+                        place.address.country;
+                }
+
+                suggestionsList.style.display = "none";
+            });
+
+            suggestionsList.appendChild(li);
+        });
+
+        suggestionsList.style.display = "block";
+    }
+
+    // Hide suggestions if user clicks anywhere outside
+    document.addEventListener("click", (e) => {
+        if (!input.contains(e.target) && !suggestionsList.contains(e.target)) {
+            suggestionsList.style.display = "none";
+        }
+    });
+</script>

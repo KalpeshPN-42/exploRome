@@ -1,0 +1,159 @@
+/* Color Guide: Brand Theme #a50591 */
+
+.about-wrapper {
+    padding: 3rem 0;
+    background-color: #fcf8fa; /* Soft warm background hint */
+    min-height: calc(100vh - 150px);
+    display: flex;
+    flex-direction: column;
+    align-content: start;
+}
+
+.about-header-section {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.about-brand-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #a50591;
+    letter-spacing: -1px;
+}
+
+.about-brand-subtitle {
+    font-size: 1.25rem;
+    color: #6c757d;
+    max-width: 600px;
+    margin: 1rem auto 0 auto;
+}
+
+.about-heading {
+    color: #a50591;
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Subtle accent underline for section headings */
+.about-heading::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 3px;
+    background-color: #a50591;
+    border-radius: 2px;
+}
+
+/* Center alignment helper for the middle sections */
+.text-center .about-heading::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.about-lead-text {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #495057;
+}
+
+/* Custom Highlight Feature Cards */
+.feature-card {
+    background: #ffffff;
+    border: 1px solid rgba(165, 5, 145, 0.1);
+    border-top: 4px solid #a50591;
+    border-radius: 8px;
+    padding: 2rem;
+    height: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(165, 5, 145, 0.08);
+}
+
+.feature-icon-wrapper {
+    font-size: 2rem;
+    color: #a50591;
+    margin-bottom: 1rem;
+}
+
+.feature-card-title {
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 0.75rem;
+}
+
+/* Philosophy Blockquote Styling */
+.philosophy-blockquote {
+    background: #ffffff;
+    border-left: 5px solid #a50591;
+    border-radius: 4px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    margin: 4rem 0;
+}
+
+.philosophy-text {
+    font-size: 1.4rem;
+    font-style: italic;
+    color: #a50591;
+    font-weight: 500;
+}
+
+/* Clean Custom Table UI */
+.custom-comparison-table {
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.custom-comparison-table thead th {
+    background-color: #a50591;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 1.25rem;
+    border: none;
+}
+
+.custom-comparison-table tbody td {
+    padding: 1.25rem;
+    vertical-align: middle;
+    color: #495057;
+}
+
+.table-bullet-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.table-bullet-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.table-bullet-list li:last-child {
+    margin-bottom: 0;
+}
+
+.table-bullet-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #a50591;
+    font-weight: bold;
+}
+
+.about-wrapper i{
+    font-size: 2rem;
+    margin-left: 1rem;
+    cursor: pointer;
+}

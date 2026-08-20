@@ -1,0 +1,35 @@
+<% layout("./layouts/boilerplate.ejs") %>
+<link rel="stylesheet" href="/css/modal-login-signup.css">
+
+<div class="modal-overlay hidden">
+    <div class="modal-content row">
+        <form action="/users" method="POST" class="new-form needs-validation login-form" novalidate>
+            <div class="close-button d-flex justify-content-end">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+            
+            <div class="d-flex flex-column justify-content-center username-div mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input id="username" name="username" type="text" class="form-control" placeholder="username" required>
+            </div>
+            
+            <div class="d-flex flex-column justify-content-center email-div mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input id="email" name="email" type="email" class="form-control" placeholder="email" required>
+            </div>
+            
+            <div class="d-flex flex-column justify-content-center password-div mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input id="password" name="password" type="password" class="form-control" placeholder="password" required>
+            </div>
+            
+            <div class="d-flex justify-content-between align-items-center login-create-account-btn-div mt-4">
+                <a href="/user/login">Login</a>
+                <button class="btn btn-dark px-4">Sign up</button>
+            </div>
+            
+        </form>
+    </div>  
+</div>
+
+<script src="modal-login-signup.js"></script>

@@ -1,0 +1,146 @@
+body {
+    overflow-x: hidden !important;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    min-width: 15.5rem;
+    transition: opacity 500ms ease 0ms,width 500ms ease 0ms ,height 500ms ease 0ms,visibility 500ms ease 0ms;
+    opacity: 1;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 0.5rem;
+    background-color: #a50591;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px; 
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.modal-content input {
+    border: 1px solid rgb(210, 210, 210);
+    color: #333;
+    padding: 0.6rem;
+    border-radius: 0px !important;
+}
+
+.modal-content label {
+    color: white;
+    font-weight: 500;
+}
+
+.modal-content input:focus {
+    color: black;
+    outline: none !important;
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25); /* Sleek Bootstrap-style focus ring */
+}
+
+.login-form {
+    margin-bottom: 0 !important;
+    min-width: 210px;
+}
+
+.login-form button {
+    color: white;
+}
+
+.login-form a {
+    color: white; /* Changed to white for better contrast readability against the purple background */
+}
+
+.register-form {
+    margin-bottom: 0 !important;
+    min-width: 210px;
+}
+
+.register-form button {
+    color: white;
+}
+
+.register-form a {
+    color: white; /* Changed to white for better contrast readability against the purple background */
+}
+
+.modal-overlay .hidden-login{
+    display: none;
+}
+
+.modal-overlay .hidden-register{
+    display: none;
+}
+
+.modal-overlay.hidden{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 20vw;
+    height: 35vh;
+    margin: auto;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.resize-animation-stopper * {
+  transition: none !important;
+}
+
+.invalid-credentials-flash-div{
+    text-align: center;
+    width: 100%;
+    padding: 1rem !important;
+    margin-top: 0.5rem !important;
+    background-color: rgba(225, 25, 25, 0.2);
+    color: black;
+    border: black 1px solid;
+    border-radius: 0 !important;
+}
+
+.invalid-credentials-flash-div.hidden{
+    text-align: center;
+    width: 100%;
+    display: none;
+}
+
+.user-exist-flash-div{
+    text-align: center;
+    width: 100%;
+    padding: 1rem !important;
+    margin-top: 0.5rem !important;
+    background-color: rgba(225, 25, 25, 0.2);
+    color: black;
+    border: black 1px solid;
+    border-radius: 0 !important;
+}
+
+.user-exist-flash-div.hidden{
+    text-align: center;
+    width: 100%;
+    display: none;
+}
+
+.btn-close:focus{
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}

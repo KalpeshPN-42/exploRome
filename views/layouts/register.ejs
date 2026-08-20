@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="/css/modal-login-signup.css">
+
+<div class="modal-content row register hidden-register">
+    <form action="/user/signup" method="POST" class="new-form needs-validation register-form" novalidate>
+        <div class="close-button d-flex justify-content-end">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+
+        <div class="user-exist-flash-div hidden alert alert-warning alert-dismissible fade show" role="alert">
+            <strong></strong>
+            <button type="button" class="btn-close" aria-label="Close"></button>
+        </div>
+        
+        <div class="d-flex flex-column justify-content-center username-div mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input id="username" name="username" type="text" class="form-control" placeholder="username" required>
+            <div class="invalid-feedback" style="color: white;">Please enter username!</div>
+        </div>
+        
+        <div class="d-flex flex-column justify-content-center email-div mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input id="email" name="email" type="email" class="form-control" placeholder="email" required>
+            <div class="invalid-feedback" style="color: white;">Please enter email!</div>
+        </div>
+        
+        <div class="d-flex flex-column justify-content-center password-div mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input id="password" name="password" type="password" class="form-control" placeholder="password" required>
+            <div class="invalid-feedback" style="color: white;">Please enter password!</div>
+        </div>
+        
+        <div class="d-flex justify-content-between align-items-center signup-btn-div mt-4">
+            <a href="#">Login</a>
+            <button class="btn btn-dark px-4">Sign up</button>
+        </div>
+        
+    </form>
+</div>  

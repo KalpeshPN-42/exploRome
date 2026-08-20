@@ -1,0 +1,36 @@
+<nav class="navbar main sticky-top">
+  <div class="container-fluid navbar">
+    <div class="nav-menu-div">
+      <a class="navbar-brand" href="/listing"><i class="fa-sharp fa-solid fa-compass"></i></a>     
+      <a class="nav-link active" aria-current="page" href="/listing"><b>HOME</b></a>     
+      <a class="nav-link active" aria-current="page" href="/listing/new"><b>CREATE</b></a>
+      <a class="nav-link active" aria-current="page" href="/about"><b>ABOUT</b></a>
+      <% if(currentUser){ %>
+      <a class="nav-link active logout" aria-current="page" href="#"><b>LOGOUT</b></a>
+      <% } else{ %>
+      <a class="nav-link active login-signup" aria-current="page" href="#"><b>LOGIN/SIGN UP</b></a>
+      <% } %>
+      <i class="fa-solid fa-bars"></i>
+    </div>
+    <div class="search-input-div">
+      <form class="d-flex searchbar" role="search" method="get" action="/listing/search">
+        <input class="form-control me-2 navbar-search w-75" type="search" placeholder="Search" aria-label="Search" name="search"/>
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+  <div class="hidden-nav-elements">
+    <a class="nav-link active" aria-current="page" href="/listing"><b>HOME</b></a>
+    <a class="nav-link active" aria-current="page" href="/listing/new"><b>CREATE</b></a>
+    <a class="nav-link active" aria-current="page" href="/about"><b>ABOUT</b></a>
+    <% if(currentUser){ %>
+    <a class="nav-link active logout" aria-current="page" href="#"><b>LOGOUT</b></a>
+    <% } else{ %>
+    <a class="nav-link active login-signup" aria-current="page" href="#"><b>LOGIN/SIGN UP</b></a>
+    <% } %>
+    <form class="d-flex searchbar-hidden" role="search" method="get" action="/listing/search">
+      <input class="form-control me-2 navbar-search" type="search" placeholder="Search" aria-label="Search" name="search"/>
+      <button class="btn btn-outline-primary" type="submit">Search</button>
+    </form>
+  </div>
+</nav>

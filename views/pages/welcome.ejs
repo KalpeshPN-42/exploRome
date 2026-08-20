@@ -1,0 +1,66 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+<style>
+
+    .container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        border-radius: 9px;
+        min-width: 17rem;
+    }
+
+    .text {
+        color: #000000;
+        font-size: clamp(2.5rem, 5vw + 1rem, 5rem);
+        line-height: 1.2;
+        box-sizing: border-box;
+        padding: 5%;
+        width: 100%;
+        text-align: center;
+        perspective: 500px;
+    }
+
+    .container .text span{
+        color: #a50591;
+    }
+</style>
+
+<div class="container">
+    <div class="text">Welcome to <span>exploRome</span>!</div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        let textInstance;
+        let animation;
+
+        function initCharAnimation() {
+            // Revert any existing split/animation to prevent memory leaks on resize
+            if (animation) animation.revert();
+            if (textInstance) textInstance.revert();
+
+            // Split into characters only
+            textInstance = new SplitType(".text", { types: "chars" });
+
+            // Animate each character from right (x: 150) to left
+            animation = gsap.from(textInstance.chars, {
+                x: 150,
+                opacity: 0,
+                duration: 0.7,
+                ease: "power4.out",
+                stagger: 0.04,
+            });
+        }
+
+        // Run animation on page load
+        initCharAnimation();
+
+        // Re-calculate split positions on screen resize
+        window.addEventListener("resize", initCharAnimation);
+    });
+</script>

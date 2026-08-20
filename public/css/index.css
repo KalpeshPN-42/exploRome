@@ -1,0 +1,19 @@
+.footer-div{
+    position: fixed !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+}
+
+.no-results img{
+    width: 100% !important;
+    aspect-ratio: 3/1;
+    margin-top: 2rem;
+    min-height: 30rem;
+    opacity: 0.5;
+}
+
+.no-results p{
+    align-self: flex-start;
+    text-align: center;
+}
+
